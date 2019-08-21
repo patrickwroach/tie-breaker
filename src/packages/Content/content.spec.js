@@ -1,7 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
 import Content from ".";
-import { getUnpackedSettings } from "http2";
 
 describe("<Content />", () => {
   const wrapper = shallow(<Content />);

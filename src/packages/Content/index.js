@@ -3,6 +3,7 @@ import QuestionSection from "../QuestionSection";
 import SubmitButton from "../SubmitButton";
 import ResultsSection from "../ResultsSection";
 import { setHighOrLow } from "./helpers/setHighOrLow";
+import { comparePairOfAnswers} from "./helpers/comparePairOfAnswers";
 
 class Content extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class Content extends Component {
     this.submitAnswers = this.submitAnswers.bind(this);
     this.resetTieBreaker = this.resetTieBreaker.bind(this);
     this.setHighOrLow = setHighOrLow.bind(this);
+    this.comparePairOfAnswers = comparePairOfAnswers.bind(this);
     this.handleAnswerChange = this.handleAnswerChange.bind(this);
   }
 
@@ -29,7 +31,7 @@ class Content extends Component {
     }));
   }
 
-  testAnswers() {
+/*   testAnswers() {
 
     //Check for tie condition and return null, initial state is set for a tie
 
@@ -49,7 +51,7 @@ class Content extends Component {
         winner: "Player Two"
       });
     }
-  }
+  } */
 
   clickFunctionSplitter() {
     if (this.state.answered === false) {
@@ -60,7 +62,7 @@ class Content extends Component {
   }
 
   submitAnswers() {
-    this.testAnswers();
+    this.comparePairOfAnswers();
     const answerStatus = true;
     const newButtonText = "Reset";
     this.setState({
@@ -90,7 +92,7 @@ class Content extends Component {
       displayedContent = (
         <ResultsSection
           winner = {this.state.winner}
-          testAnswers = {this.testAnswers}
+          testAnswers = {this.comparePairOfAnswers}
           whoWins = {this.state.highWins}
 
         />
