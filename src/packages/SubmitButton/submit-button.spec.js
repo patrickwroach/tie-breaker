@@ -14,7 +14,7 @@ describe('<SubmitButton  />', ()=> {
     expect(testButton.text().includes(expectedText)).to.be.true;
     });
 
-    it('has the fires the correct function', () => {
+    it('fires the correct function', () => {
       const onClickTest = sinon.spy();
       const testButton = shallow(<SubmitButton handleClick={onClickTest} />);
       testButton.simulate('click');
