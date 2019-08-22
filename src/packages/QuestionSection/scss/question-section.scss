@@ -3,27 +3,30 @@
     flex-direction: column;
     flex: 1 1 auto;
     justify-content: space-evenly;
-    .question-section {
+
+    li.question-input-group {
         max-height:200px;
         
         .question { 
-            font-size:2rem;
+            font-size:1.5rem;
             color:$color-dark;
         }
         .answers {
             width:80%;
-            margin: 30px auto;
+            margin: 10px auto;
             white-space: nowrap;
+            display:flex;   
+            justify-content: center;
+            
 
             .player{
                 display:inline-block;
-                width: 50%;
-                text-align: center;
-        
+                margin: 0 10px;
+                
+             
                 label {
                         display:block;
                         width:100%;
-                        text-align: center;
                 }
 
                 input {

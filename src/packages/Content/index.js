@@ -3,52 +3,38 @@ import QuestionSection from "../QuestionSection";
 import SubmitButton from "../SubmitButton";
 import ResultsSection from "../ResultsSection";
 import { setHighOrLow } from "./helpers/setHighOrLow";
+import { comparePairOfAnswers} from "./helpers/comparePairOfAnswers";
 
 class Content extends Component {
   constructor(props) {
     super(props);
+    this.defaultNumberOfQuestions = 4
     this.initialState = {
       answered: false,
       buttonText: "Break Tie",
-      highWins: false,
-      playerOne: 0,
-      playerTwo: 0,
-      winner: undefined
+      highWins: new Array(this.defaultNumberOfQuestions).fill(false),
+      playerOne: new Array(this.defaultNumberOfQuestions).fill(0),
+      playerTwo: new Array(this.defaultNumberOfQuestions).fill(0),
+      winner: undefined,
+      //eventually users should be able to set their own number of questions
+      numOfQuestion: this.defaultNumberOfQuestions,
     };
     this.state = this.initialState;
     this.submitAnswers = this.submitAnswers.bind(this);
     this.resetTieBreaker = this.resetTieBreaker.bind(this);
     this.setHighOrLow = setHighOrLow.bind(this);
+    this.comparePairOfAnswers = comparePairOfAnswers.bind(this);
     this.handleAnswerChange = this.handleAnswerChange.bind(this);
   }
+ 
+  handleAnswerChange(receivedAnswer, receivedName, receivedQuestionNumber) {
+    const newAnswers = this.state[receivedName];
+    const answerUnstrung = (receivedAnswer != '') ? Number(receivedAnswer): '';
+    newAnswers[receivedQuestionNumber] = answerUnstrung;
+      this.setState(() => ({
+        [receivedName]: newAnswers
+      }));
 
-
-  handleAnswerChange(receivedAnswer, receivedName) {
-    this.setState(() => ({
-      [receivedName]: receivedAnswer
-    }));
-  }
-
-  testAnswers() {
-
-    //Check for tie condition and return null, initial state is set for a tie
-
-    if (this.state.playerOne === this.state.playerTwo) {
-      return null;
-    } 
-    
-    //determine who has the higher answer
-    let playerOneHasHigherAnswer = this.state.playerOne > this.state.playerTwo;
-
-    if ((this.state.highWins === playerOneHasHigherAnswer)) {
-      this.setState({
-        winner: "Player One"
-      });
-    } else {
-      this.setState({
-        winner: "Player Two"
-      });
-    }
   }
 
   clickFunctionSplitter() {
@@ -60,7 +46,7 @@ class Content extends Component {
   }
 
   submitAnswers() {
-    this.testAnswers();
+    this.comparePairOfAnswers();
     const answerStatus = true;
     const newButtonText = "Reset";
     this.setState({
@@ -85,13 +71,17 @@ class Content extends Component {
   
 
   render() {
+    const questionKeys = Array.from(Array(this.state.numOfQuestion)).map((e,i)=>i)
     let displayedContent;
     if (this.state.answered) {
       displayedContent = (
         <ResultsSection
           winner = {this.state.winner}
-          testAnswers = {this.testAnswers}
-          whoWins = {this.state.highWins}
+          testAnswers = {this.comparePairOfAnswers}
+          whatWon = {this.state.highWins}
+          playerOneAnswer={this.state.playerOne}
+          playerTwoAnswer={this.state.playerTwo}
+          resultsKeys = {questionKeys}
 
         />
       );
@@ -103,6 +93,8 @@ class Content extends Component {
           playerTwoAnswer={this.state.playerTwo}
           handleAnswerChange={this.handleAnswerChange}
           setHighOrLow={this.setHighOrLow}
+          numOfQuestion={this.numOfQuestion}
+          questionKeys = {questionKeys}
         />
       );
     }
