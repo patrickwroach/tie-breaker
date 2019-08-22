@@ -1,21 +1,23 @@
 import React, { Component } from "react";
-import Question from "./components/Question";
-import InputPair from "./components/InputPair";
+import QuestionInputGroup from "./components/QuestionInputGroup";
+
 
 class QuestionSection extends Component {
   
   componentDidMount(){
     this.props.setHighOrLow();
    }
+   
 
   render() {
     return (
-      <div className="questions-wrapper">
-        <div className="question-section">
-          <Question />
-           <InputPair  handleAnswerChange={this.props.handleAnswerChange}  playerOneAnswer={this.props.playerOneAnswer} playerTwoAnswer={this.props.playerTwoAnswer}/>
-        </div>
-      </div>
+      <ul className="questions-wrapper">
+        <QuestionInputGroup
+          handleAnswerChange={this.props.handleAnswerChange}
+          playerOneAnswer={this.props.playerOneAnswer.firstAnswer}
+          playerTwoAnswer={this.props.playerTwoAnswer.firstAnswer}
+           />
+      </ul>
     );
   }
 }

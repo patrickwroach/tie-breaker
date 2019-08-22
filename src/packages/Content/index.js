@@ -12,9 +12,17 @@ class Content extends Component {
       answered: false,
       buttonText: "Break Tie",
       highWins: false,
-      playerOne: 0,
-      playerTwo: 0,
-      winner: undefined
+      playerOne: {
+        firstAnswer: 0,
+        secondAnswer: 0,
+        thirdAnwer: 0
+      },
+      playerTwo: {
+        firstAnswer: 0,
+        secondAnswer: 0,
+        thirdAnwer: 0
+      },
+      winner: undefined,
     };
     this.state = this.initialState;
     this.submitAnswers = this.submitAnswers.bind(this);
@@ -26,32 +34,14 @@ class Content extends Component {
 
 
   handleAnswerChange(receivedAnswer, receivedName) {
-    this.setState(() => ({
-      [receivedName]: receivedAnswer
-    }));
-  }
-
-/*   testAnswers() {
-
-    //Check for tie condition and return null, initial state is set for a tie
-
-    if (this.state.playerOne === this.state.playerTwo) {
-      return null;
-    } 
     
-    //determine who has the higher answer
-    let playerOneHasHigherAnswer = this.state.playerOne > this.state.playerTwo;
+      this.setState(() => ({
+        [receivedName]: {
+          firstAnswer : receivedAnswer
+        }
+      }));
 
-    if ((this.state.highWins === playerOneHasHigherAnswer)) {
-      this.setState({
-        winner: "Player One"
-      });
-    } else {
-      this.setState({
-        winner: "Player Two"
-      });
-    }
-  } */
+  }
 
   clickFunctionSplitter() {
     if (this.state.answered === false) {
@@ -105,6 +95,7 @@ class Content extends Component {
           playerTwoAnswer={this.state.playerTwo}
           handleAnswerChange={this.handleAnswerChange}
           setHighOrLow={this.setHighOrLow}
+          numOfQuestion={this.numOfQuestion}
         />
       );
     }
