@@ -1,20 +1,34 @@
+import { setHighOrLow } from "./setHighOrLow";
+
 export function comparePairOfAnswers() {
 
   //Check for tie condition and return null, initial state is set for a tie
+  let winLossMarker = 0;
 
-  if (this.state.playerOne.firstAnswer === this.state.playerTwo.firstAnswer) {
-    return null;
-  } 
-  
-  //determine who has the higher answer
+  const pOne = this.state.playerOne;
+  const pTwo = this.state.playerTwo;
+  const highWins = this.state.highWins;
 
-  let playerOneHasHigherAnswer = this.state.playerOne.firstAnswer > this.state.playerTwo.firstAnswer;
+  var i;
+  for(i = 0; i < pOne.length; i++){
+    if (highWins[i] && pOne[i]>pTwo[i]){
+      winLossMarker++
+    }else if(!highWins[i] && pOne[i]<pTwo[i]){
+      winLossMarker++
+    }else if(highWins[i] && pOne[i]<pTwo[i]){
+      winLossMarker--
+    }else if(!highWins[i] && pOne[i]>pTwo[i]){
+      winLossMarker--
+    }
+  };
 
-  if ((this.state.highWins === playerOneHasHigherAnswer)) {
+
+
+  if (winLossMarker>0) {
     this.setState({
       winner: "Player One"
     });
-  } else {
+  } else if(winLossMarker<0) {
     this.setState({
       winner: "Player Two"
     });

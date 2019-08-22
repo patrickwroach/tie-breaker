@@ -1,19 +1,31 @@
 import React, { Component } from "react";
+import StatLine from "./components/StatLine";
 
 class ResultsSection extends Component {
   render() {
+
+    const resultsKeys = this.props.resultsKeys;
+    const resultsList = resultsKeys.map(resultsIndex => (
+      <StatLine
+        key={resultsIndex.toString()}
+        resultsIndex={resultsIndex}
+        playerOneAnswer={this.props.playerOneAnswer}
+        playerTwoAnswer={this.props.playerTwoAnswer}
+        whatWon={this.props.whatWon}
+      />
+    ));
+
     return (
-      <div className="results-section">
-        <h1>
+      <div className="results-wrapper">
+        <h1 className="declared-winner">
           {" "}
           {this.props.winner === undefined
             ? "A tie! Gooooddddamn, what is even the point of this site"
             : this.props.winner + " wins!"}
         </h1>
-        <p>
-          The {this.props.whoWins ? "higher" : "lower"} answer{" "}
-          {this.props.winner === undefined ? "would have" : ""} won.
-        </p>
+        <ul className="results-stats">
+        {resultsList}
+        </ul>
       </div>
     );
   }

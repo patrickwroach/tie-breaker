@@ -10,7 +10,8 @@ class InputPair extends Component {
   handleChange(e) {
     const answer = e.target.value;
     const targetName = e.target.name;
-    this.props.handleAnswerChange(answer, targetName);
+    const questionNumber = this.props.questionNumber;
+    this.props.handleAnswerChange(answer, targetName, questionNumber);
   }
 
  render() {
@@ -18,11 +19,11 @@ class InputPair extends Component {
         <ul className="answers">
          <li className="player">
             <label>Player One</label>
-            <input type="number" name="playerOne" onChange={this.handleChange} value={this.props.playerOneAnswer}/>
+            <input type="number" name="playerOne" onChange={this.handleChange} value={this.props.playerOneAnswer[this.props.questionNumber]}/>
           </li>
           <li className="player">
             <label>Player Two</label>
-            <input type="number" name="playerTwo" onChange={this.handleChange} value={this.props.playerTwoAnswer} />
+            <input type="number" name="playerTwo" onChange={this.handleChange} value={this.props.playerTwoAnswer[this.props.questionNumber]} />
           </li>
         </ul>
     )

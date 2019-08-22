@@ -8,21 +8,16 @@ import { comparePairOfAnswers} from "./helpers/comparePairOfAnswers";
 class Content extends Component {
   constructor(props) {
     super(props);
+    this.defaultNumberOfQuestions = 4
     this.initialState = {
       answered: false,
       buttonText: "Break Tie",
-      highWins: false,
-      playerOne: {
-        firstAnswer: 0,
-        secondAnswer: 0,
-        thirdAnwer: 0
-      },
-      playerTwo: {
-        firstAnswer: 0,
-        secondAnswer: 0,
-        thirdAnwer: 0
-      },
+      highWins: new Array(this.defaultNumberOfQuestions).fill(false),
+      playerOne: new Array(this.defaultNumberOfQuestions).fill(0),
+      playerTwo: new Array(this.defaultNumberOfQuestions).fill(0),
       winner: undefined,
+      //eventually users should be able to set their own number of questions
+      numOfQuestion: this.defaultNumberOfQuestions,
     };
     this.state = this.initialState;
     this.submitAnswers = this.submitAnswers.bind(this);
@@ -31,14 +26,13 @@ class Content extends Component {
     this.comparePairOfAnswers = comparePairOfAnswers.bind(this);
     this.handleAnswerChange = this.handleAnswerChange.bind(this);
   }
-
-
-  handleAnswerChange(receivedAnswer, receivedName) {
-    
+ 
+  handleAnswerChange(receivedAnswer, receivedName, receivedQuestionNumber) {
+    const newAnswers = this.state[receivedName];
+    const answerUnstrung = (receivedAnswer != '') ? Number(receivedAnswer): '';
+    newAnswers[receivedQuestionNumber] = answerUnstrung;
       this.setState(() => ({
-        [receivedName]: {
-          firstAnswer : receivedAnswer
-        }
+        [receivedName]: newAnswers
       }));
 
   }
@@ -77,13 +71,17 @@ class Content extends Component {
   
 
   render() {
+    const questionKeys = Array.from(Array(this.state.numOfQuestion)).map((e,i)=>i)
     let displayedContent;
     if (this.state.answered) {
       displayedContent = (
         <ResultsSection
           winner = {this.state.winner}
           testAnswers = {this.comparePairOfAnswers}
-          whoWins = {this.state.highWins}
+          whatWon = {this.state.highWins}
+          playerOneAnswer={this.state.playerOne}
+          playerTwoAnswer={this.state.playerTwo}
+          resultsKeys = {questionKeys}
 
         />
       );
@@ -96,6 +94,7 @@ class Content extends Component {
           handleAnswerChange={this.handleAnswerChange}
           setHighOrLow={this.setHighOrLow}
           numOfQuestion={this.numOfQuestion}
+          questionKeys = {questionKeys}
         />
       );
     }
