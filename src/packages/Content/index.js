@@ -2,19 +2,22 @@ import React, { Component } from "react";
 import QuestionSection from "../QuestionSection";
 import SubmitButton from "../SubmitButton";
 import ResultsSection from "../ResultsSection";
+import Randomizer from "react-randomizer";
 import { setHighOrLow } from "./helpers/setHighOrLow";
 import { comparePairOfAnswers} from "./helpers/comparePairOfAnswers";
+import { numericalQuestionList } from "../../assets/constants/bulkQuestionList"
 
 class Content extends Component {
   constructor(props) {
     super(props);
-    this.defaultNumberOfQuestions = 4
+    this.defaultNumberOfQuestions = 3;
     this.initialState = {
       answered: false,
       buttonText: "Break Tie",
       highWins: new Array(this.defaultNumberOfQuestions).fill(false),
       playerOne: new Array(this.defaultNumberOfQuestions).fill(0),
       playerTwo: new Array(this.defaultNumberOfQuestions).fill(0),
+      questionIndex: [1,2,3,4],
       winner: undefined,
       //eventually users should be able to set their own number of questions
       numOfQuestion: this.defaultNumberOfQuestions,
@@ -25,6 +28,7 @@ class Content extends Component {
     this.setHighOrLow = setHighOrLow.bind(this);
     this.comparePairOfAnswers = comparePairOfAnswers.bind(this);
     this.handleAnswerChange = this.handleAnswerChange.bind(this);
+    this.getQuestionIndexArray = this.getQuestionIndexArray.bind(this);
   }
  
   handleAnswerChange(receivedAnswer, receivedName, receivedQuestionNumber) {
@@ -44,6 +48,22 @@ class Content extends Component {
       this.resetTieBreaker();
     }
   }
+
+  getQuestionIndexArray(numberOfQuestions) {
+    const upperRandomizerBoundary = numericalQuestionList.length - 1;
+    const newQuestionIndex= [];
+    let randomQuestionsSelection;
+
+    do {
+    randomQuestionsSelection = Randomizer.randomNumber(0, upperRandomizerBoundary);
+    if (!newQuestionIndex.includes(randomQuestionsSelection))
+    newQuestionIndex.push(randomQuestionsSelection);
+    } while(newQuestionIndex.length < numberOfQuestions);
+
+    this.setState({
+     questionIndex: newQuestionIndex
+    });
+};
 
   submitAnswers() {
     this.comparePairOfAnswers();
@@ -93,6 +113,9 @@ class Content extends Component {
           playerTwoAnswer={this.state.playerTwo}
           handleAnswerChange={this.handleAnswerChange}
           setHighOrLow={this.setHighOrLow}
+          getQuestionIndexArray={this.getQuestionIndexArray}
+          questionList={numericalQuestionList}
+          questionIndex={this.state.questionIndex}
           numOfQuestion={this.numOfQuestion}
           questionKeys = {questionKeys}
         />

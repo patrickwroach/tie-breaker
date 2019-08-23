@@ -6,7 +6,10 @@ class QuestionInputGroup extends Component {
   render() {
     return (
       <li className="question-input-group">
-        <Question />
+        <Question 
+          questionNumber={this.props.questionNumber}
+          questionIndex={this.props.questionIndex} 
+          questionList={this.props.questionList} />
         <InputPair
           questionNumber={this.props.questionNumber}
           handleAnswerChange={this.props.handleAnswerChange}
