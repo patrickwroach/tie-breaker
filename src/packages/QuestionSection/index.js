@@ -1,25 +1,29 @@
 import React, { Component } from "react";
 import QuestionInputGroup from "./components/QuestionInputGroup";
 
-class QuestionSection extends Component {
 
+class QuestionSection extends Component {
+  
   componentDidMount(){
     this.props.setHighOrLow();
-  }
+    this.props.getQuestionIndexArray(this.props.questionKeys.length);
+      }
 
   render() {
     const questionKeys = this.props.questionKeys;
-    const questionList = questionKeys.map(questionNumber => (
+    const questions = questionKeys.map(questionNumber => (
       <QuestionInputGroup
         key={questionNumber.toString()}
         questionNumber={questionNumber}
+        questionIndex={this.props.questionIndex}
+        questionList={this.props.questionList}
         handleAnswerChange={this.props.handleAnswerChange}
         playerOneAnswer={this.props.playerOneAnswer}
         playerTwoAnswer={this.props.playerTwoAnswer}
       />
     ));
 
-    return <ul className="questions-wrapper">{questionList}</ul>;
+    return <ul className="questions-wrapper">{questions}</ul>;
   }
 }
 

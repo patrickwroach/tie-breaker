@@ -4,7 +4,7 @@ class Question extends Component {
  render() {
     return (
       <p className="question">
-         What day of the month were you born?
+         {this.props.questionList[this.props.questionIndex[this.props.questionNumber]]}?
       </p>
     )
   }
