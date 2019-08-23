@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import QuestionSection from "../QuestionSection";
 import SubmitButton from "../SubmitButton";
 import ResultsSection from "../ResultsSection";
-import Randomizer from "react-randomizer";
+
 import { setHighOrLow } from "./helpers/setHighOrLow";
+import { getQuestionIndexArray} from "./helpers/getQuestionIndexArray"
 import { comparePairOfAnswers} from "./helpers/comparePairOfAnswers";
 import { numericalQuestionList } from "../../assets/constants/bulkQuestionList"
 
@@ -28,7 +29,7 @@ class Content extends Component {
     this.setHighOrLow = setHighOrLow.bind(this);
     this.comparePairOfAnswers = comparePairOfAnswers.bind(this);
     this.handleAnswerChange = this.handleAnswerChange.bind(this);
-    this.getQuestionIndexArray = this.getQuestionIndexArray.bind(this);
+    this.getQuestionIndexArray = getQuestionIndexArray.bind(this);
   }
  
   handleAnswerChange(receivedAnswer, receivedName, receivedQuestionNumber) {
@@ -49,21 +50,7 @@ class Content extends Component {
     }
   }
 
-  getQuestionIndexArray(numberOfQuestions) {
-    const upperRandomizerBoundary = numericalQuestionList.length - 1;
-    const newQuestionIndex= [];
-    let randomQuestionsSelection;
 
-    do {
-    randomQuestionsSelection = Randomizer.randomNumber(0, upperRandomizerBoundary);
-    if (!newQuestionIndex.includes(randomQuestionsSelection))
-    newQuestionIndex.push(randomQuestionsSelection);
-    } while(newQuestionIndex.length < numberOfQuestions);
-
-    this.setState({
-     questionIndex: newQuestionIndex
-    });
-};
 
   submitAnswers() {
     this.comparePairOfAnswers();

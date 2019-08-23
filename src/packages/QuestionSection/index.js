@@ -6,7 +6,7 @@ class QuestionSection extends Component {
   
   componentDidMount(){
     this.props.setHighOrLow();
-    this.props.getQuestionIndexArray(this.props.questionKeys.length);
+    this.props.getQuestionIndexArray(this.props.questionKeys.length, this.props.questionList.length);
       }
 
   render() {
