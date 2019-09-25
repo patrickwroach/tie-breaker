@@ -5,7 +5,7 @@ import ResultsSection from "../ResultsSection";
 
 import { setHighOrLow } from "./helpers/setHighOrLow";
 import { getQuestionIndexArray} from "./helpers/getQuestionIndexArray"
-import { comparePairOfAnswers} from "./helpers/comparePairOfAnswers";
+import { compareAnswers} from "./helpers/compareAnswers";
 import { numericalQuestionList } from "../../assets/constants/bulkQuestionList"
 
 class Content extends Component {
@@ -18,7 +18,7 @@ class Content extends Component {
       highWins: new Array(this.defaultNumberOfQuestions).fill(false),
       playerOne: new Array(this.defaultNumberOfQuestions).fill(0),
       playerTwo: new Array(this.defaultNumberOfQuestions).fill(0),
-      questionIndex: [1,2,3,4],
+      questionIndex: [],
       winner: undefined,
       //eventually users should be able to set their own number of questions
       numOfQuestion: this.defaultNumberOfQuestions,
@@ -27,7 +27,7 @@ class Content extends Component {
     this.submitAnswers = this.submitAnswers.bind(this);
     this.resetTieBreaker = this.resetTieBreaker.bind(this);
     this.setHighOrLow = setHighOrLow.bind(this);
-    this.comparePairOfAnswers = comparePairOfAnswers.bind(this);
+    this.compareAnswers = compareAnswers.bind(this);
     this.handleAnswerChange = this.handleAnswerChange.bind(this);
     this.getQuestionIndexArray = getQuestionIndexArray.bind(this);
   }
@@ -53,7 +53,7 @@ class Content extends Component {
 
 
   submitAnswers() {
-    this.comparePairOfAnswers();
+    this.compareAnswers();
     const answerStatus = true;
     const newButtonText = "Reset";
     this.setState({
@@ -84,12 +84,11 @@ class Content extends Component {
       displayedContent = (
         <ResultsSection
           winner = {this.state.winner}
-          testAnswers = {this.comparePairOfAnswers}
+          testAnswers = {this.compareAnswers}
           whatWon = {this.state.highWins}
           playerOneAnswer={this.state.playerOne}
           playerTwoAnswer={this.state.playerTwo}
           resultsKeys = {questionKeys}
-
         />
       );
     } else {

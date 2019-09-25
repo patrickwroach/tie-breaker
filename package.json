@@ -37,6 +37,7 @@
     "webpack-dev-server": "^3.7.2"
   },
   "dependencies": {
+    "jest": "^24.9.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-randomizer": "^1.0.6"

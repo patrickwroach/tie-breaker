@@ -1,6 +1,4 @@
-import { setHighOrLow } from "./setHighOrLow";
-
-export function comparePairOfAnswers() {
+export function compareAnswers() {
 
   //Check for tie condition and return null, initial state is set for a tie
   let winLossMarker = 0;
