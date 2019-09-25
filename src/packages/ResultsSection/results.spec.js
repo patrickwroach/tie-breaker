@@ -1,7 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from "enzyme";
 import ResultsSection from '.';
-import sinon from 'sinon'
 
 const fillRangeWithAscendingNumbers = (start, end) => {
   return Array(end - start + 1).fill().map((item, index) => start + index);
@@ -15,7 +14,7 @@ describe('<Results  />', ()=> {
   const mockWhatWon = Array(mockNumberOfQuestions).fill(0);
   const mockWinner = "Mock Player" 
   const mockResultsKey = fillRangeWithAscendingNumbers(0, mockNumberOfQuestions - 1 );
-  const spyOnCompareAnswers = sinon.spy();
+  const spyOnCompareAnswers = jest.fn();
 
   
 
@@ -33,14 +32,14 @@ describe('<Results  />', ()=> {
       it('displays the correct winner', () => {
         const testWinner = "playerTwo"
         const resultsTest = shallow(<ResultsSection winner = {testWinner} resultsKeys = {mockResultsKey} />);
-        expect(resultsTest.text().includes(testWinner)).to.be.true;
+        expect(resultsTest.text()).toContain(testWinner);
       });
 
       it('displays the correct tie text when a winner is undefined', () => {
         const testTieText= "A tie! Gooooddddamn, what is even the point of this site";
         const testWinner = undefined;
         const resultsTest = shallow(<ResultsSection winner = {testWinner} resultsKeys = {mockResultsKey} />);
-        expect(resultsTest.text().includes(testTieText)).to.be.true;
+        expect(resultsTest.text()).toContain(testTieText);
       });
 
 })

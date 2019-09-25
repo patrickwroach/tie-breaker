@@ -1,24 +1,24 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import sinon from 'sinon'
+import { shallow } from "enzyme";
 import SubmitButton from '.';
 
 describe('<SubmitButton  />', ()=> {
     it('renders without crashing', () => {
-        shallow(<SubmitButton />);
+       shallow(<SubmitButton />);
       });
 
     it('has the correct text on page load', () => {
     const expectedText = 'test';
-    const testButton = shallow(<SubmitButton text={expectedText} />);
-    expect(testButton.text().includes(expectedText)).to.be.true;
+    const testButton = shallow(<SubmitButton text={expectedText}/>);
+    expect(testButton.text()).toMatch(expectedText);
+
     });
 
     it('fires the correct function', () => {
-      const onClickTest = sinon.spy();
+      const onClickTest =  jest.fn();
       const testButton = shallow(<SubmitButton handleClick={onClickTest} />);
       testButton.simulate('click');
-      expect(onClickTest.called).to.equal(true);  
+      expect(onClickTest.mock.calls.length).toBe(1);
     });
 
 

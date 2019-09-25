@@ -3,21 +3,21 @@ import { shallow } from "enzyme";
 import Content from ".";
 
 describe("<Content />", () => {
-  const wrapper = shallow(<Content />);
-  const instance = wrapper.instance();
 
   it("renders without crashing", () => {
-    shallow(<Content />);
+   shallow(<Content />);
   });
 
 
   it("should update buttonSection text on submitting answers ", () => {
-    expect(wrapper.state("buttonText")).to.eql("Break Tie");
+    const wrapper = shallow(<Content />);
+    const instance = wrapper.instance();
+    expect(wrapper.state("buttonText")).toMatch(/Break Tie/);
     instance.clickFunctionSplitter();
-    expect(wrapper.state("buttonText")).to.eql("Reset");
+    expect(wrapper.state("buttonText")).toMatch(/Reset/);;
   });
 
-  it("should reset all elements of state when the buttonSection button reads Reset", () => {
+   it("should reset all elements of state when the buttonSection button reads Reset", () => {
     const wrapper = shallow(<Content />);
     const instance = wrapper.instance();
     const initialState = {
@@ -30,8 +30,8 @@ describe("<Content />", () => {
     //Call again to reset;
     instance.clickFunctionSplitter();
 
-    expect(wrapper.state("buttonText")).to.eql(initialState.buttonText);
-    expect(wrapper.state("answered")).to.eql(initialState.answered);
-  });
+    expect(wrapper.state("buttonText")).toMatch(initialState.buttonText);
+    expect(wrapper.state("answered")).toBe(initialState.answered);
+  }); 
 
 });
