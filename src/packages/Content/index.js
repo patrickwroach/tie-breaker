@@ -11,27 +11,30 @@ import { numericalQuestionList } from "../../assets/constants/bulkQuestionList"
 class Content extends Component {
   constructor(props) {
     super(props);
-    this.defaultNumberOfQuestions = 3;
-    this.initialState = {
-      answered: false,
-      buttonText: "Break Tie",
-      highWins: new Array(this.defaultNumberOfQuestions).fill(false),
-      playerOne: new Array(this.defaultNumberOfQuestions).fill(0),
-      playerTwo: new Array(this.defaultNumberOfQuestions).fill(0),
-      questionIndex: [],
-      winner: undefined,
-      //eventually users should be able to set their own number of questions
-      numOfQuestion: this.defaultNumberOfQuestions,
-    };
-    this.state = this.initialState;
+  this.defaultNumberOfQuestions = 3;
+  this.initialState = {
+    answered: false,
+    buttonText: "Break Tie",
+    highWins: new Array(this.defaultNumberOfQuestions).fill(false),
+    playerOne: new Array(this.defaultNumberOfQuestions).fill(0),
+    playerTwo: new Array(this.defaultNumberOfQuestions).fill(0),
+    questionIndex: [],
+    winner: undefined,
+    //eventually users should be able to set their own number of questions
+    numOfQuestion: this.defaultNumberOfQuestions,
+  };
+  
+    this.state = this.initialState; 
     this.submitAnswers = this.submitAnswers.bind(this);
-    this.resetTieBreaker = this.resetTieBreaker.bind(this);
+    this.setUpTieBreaker = this.setUpTieBreaker.bind(this);
     this.setHighOrLow = setHighOrLow.bind(this);
     this.compareAnswers = compareAnswers.bind(this);
     this.handleAnswerChange = this.handleAnswerChange.bind(this);
     this.getQuestionIndexArray = getQuestionIndexArray.bind(this);
   }
  
+
+
   handleAnswerChange(receivedAnswer, receivedName, receivedQuestionNumber) {
     const newAnswers = this.state[receivedName];
     const answerUnstrung = (receivedAnswer != '') ? Number(receivedAnswer): '';
@@ -46,7 +49,7 @@ class Content extends Component {
     if (this.state.answered === false) {
       this.submitAnswers();
     } else {
-      this.resetTieBreaker();
+      this.setUpTieBreaker();
     }
   }
 
@@ -63,8 +66,21 @@ class Content extends Component {
     
   }
 
-  resetTieBreaker() {
-    this.setState(this.initialState);
+  setUpTieBreaker() {
+
+ const resetState = {
+      answered: false,
+      buttonText: "Break Tie",
+      highWins: new Array(this.defaultNumberOfQuestions).fill(false),
+      playerOne: new Array(this.defaultNumberOfQuestions).fill(0),
+      playerTwo: new Array(this.defaultNumberOfQuestions).fill(0),
+      questionIndex: [],
+      winner: undefined,
+      //eventually users should be able to set their own number of questions
+      numOfQuestion: this.defaultNumberOfQuestions,
+ }
+    
+    this.setState(resetState);
   }
 
   displayedContent(){
@@ -76,9 +92,12 @@ class Content extends Component {
   };
 
   
-
+  componentDidMount(){
+   this.setUpTieBreaker;
+  }
   render() {
-    const questionKeys = Array.from(Array(this.state.numOfQuestion)).map((e,i)=>i)
+   
+    const questionKeys = Array.from(Array(this.state.numOfQuestion)).map((e,i)=>i);
     let displayedContent;
     if (this.state.answered) {
       displayedContent = (
