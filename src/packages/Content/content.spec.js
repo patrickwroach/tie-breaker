@@ -22,7 +22,8 @@ describe("<Content />", () => {
     const instance = wrapper.instance();
     const initialState = {
       answered: wrapper.state("answered"),
-      buttonText: wrapper.state("buttonText")
+      buttonText: wrapper.state("buttonText"),
+      
     };
 
     //Call submitAnswers once, to set up a completed survey
