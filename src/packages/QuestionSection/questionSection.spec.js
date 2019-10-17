@@ -32,6 +32,7 @@ describe("<questionSection />", () => {
     it("renders without crashing", () => {
     shallow(<QuestionSection {...mockProps}/>);
     });
+    
     it("should fire the highOrLow helper on mounting", () => {
     shallow (<QuestionSection {...mockProps} />);
     expect(spyOnHighOrLow.mock.calls.length).toBe(1);
