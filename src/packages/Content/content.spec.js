@@ -17,22 +17,27 @@ describe("<Content />", () => {
     expect(wrapper.state("buttonText")).toMatch(/Reset/);;
   });
 
-   it("should reset all elements of state when the buttonSection button reads Reset", () => {
+   it("should have reset all elements of state after the Button Component has been clicked a second time ", () => {
     const wrapper = shallow(<Content />);
     const instance = wrapper.instance();
     const initialState = {
       answered: wrapper.state("answered"),
       buttonText: wrapper.state("buttonText"),
-      
+      highWins: wrapper.state("highWins"),
+      playerOne: wrapper.state("playerOne"),
+      playerTwo: wrapper.state("playerTwo"),
+      questionIndex: wrapper.state("questionIndex"),
+      winner: wrapper.state("winner"),
+      numOfQuestion: wrapper.state("numOfQuestion"),
     };
 
     //Call submitAnswers once, to set up a completed survey
     instance.clickFunctionSplitter();
+
     //Call again to reset;
     instance.clickFunctionSplitter();
 
-    expect(wrapper.state("buttonText")).toMatch(initialState.buttonText);
-    expect(wrapper.state("answered")).toBe(initialState.answered);
+    expect(wrapper.state()).toEqual(initialState);
   }); 
 
 });
