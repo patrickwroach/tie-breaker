@@ -33,6 +33,8 @@ describe("<questionSection />", () => {
     shallow(<QuestionSection {...mockProps}/>);
     });
 
+    remove me 
+    
     it("should fire the highOrLow helper on mounting", () => {
     shallow (<QuestionSection {...mockProps} />);
     expect(spyOnHighOrLow.mock.calls.length).toBe(1);
